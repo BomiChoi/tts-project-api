@@ -103,3 +103,16 @@ class ProjectCreateSerializer(serializers.Serializer):
         res = create_audio(project, li)
 
         return project
+
+
+class AudioSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Audio
+        fields = (
+            'id',
+            'audio_id',
+            'text',
+            'speed',
+            'project',
+            'updated_time',
+        )
