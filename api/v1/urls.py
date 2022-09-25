@@ -2,4 +2,5 @@ from django.urls import path, include
 
 urlpatterns = [
     path('users', include('api.v1.users.urls')),
+    path('projects', include('api.v1.projects.urls'))
 ]
