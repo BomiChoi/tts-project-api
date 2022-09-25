@@ -1,9 +1,15 @@
 from django.db import models
+
+from apps.common.models import TimeStampedModel
 from apps.user.models import User
 
-class Project(models.Model):
-    project_id = models.CharField(max_length=30, unique=True)
+
+class Project(TimeStampedModel):
+    project_id = models.PositiveIntegerField(default=0)
     project_title = models.CharField(max_length=100)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    updated_time = models.DateTimeField(auto_now=True)
-    created_time = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['project_id', 'user'], name='unique_project_user')
+        ]
