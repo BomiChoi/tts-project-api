@@ -15,3 +15,6 @@ class Audio(TimeStampedModel):
         constraints = [
             models.UniqueConstraint(fields=['audio_id', 'project'], name='unique_audio_project')
         ]
+
+    def __str__(self):
+        return f'Audio {self.id} - {self.text}'

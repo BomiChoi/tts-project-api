@@ -13,3 +13,6 @@ class Project(TimeStampedModel):
         constraints = [
             models.UniqueConstraint(fields=['project_id', 'user'], name='unique_project_user')
         ]
+
+    def __str__(self):
+        return f'Project {self.id} - {self.project_title}'
