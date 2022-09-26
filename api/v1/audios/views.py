@@ -1,9 +1,10 @@
-from rest_framework.generics import ListCreateAPIView
+from django.shortcuts import get_object_or_404
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 
 from apps.audio.models import Audio
 from apps.project.models import Project
 from .paginations import AudioPagination
-from .serializers import AudioSerializer, AudioCreateSerializer
+from .serializers import AudioSerializer, AudioCreateSerializer, AudioUpdateSerializer
 
 
 class ProjectAudioListCreateView(ListCreateAPIView):
@@ -37,3 +38,15 @@ class ProjectAudioListCreateView(ListCreateAPIView):
             return AudioSerializer
         elif self.request.method == 'POST':
             return AudioCreateSerializer
+
+
+class ProjectAudioDetailView(RetrieveUpdateDestroyAPIView):
+    def get_object(self):
+        project = get_object_or_404(Project, id=self.kwargs['pk'])
+        return get_object_or_404(Audio, project=project, audio_id=self.kwargs['audio_id'])
+
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return AudioSerializer
+        elif self.request.method == 'PUT' or self.request.method == 'PATCH':
+            return AudioUpdateSerializer

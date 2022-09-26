@@ -20,15 +20,9 @@ class AudioSerializer(serializers.ModelSerializer):
         )
 
 
-class AudioCreateSerializer(serializers.ModelSerializer):
+class AudioCreateSerializer(AudioSerializer):
     audio_id = serializers.IntegerField(allow_null=True, required=False)
-
-    class Meta:
-        model = Audio
-        fields = (
-            'audio_id',
-            'text',
-        )
+    speed = serializers.IntegerField(allow_null=True, required=False)
 
     def validate(self, attrs):
         # 현재 프로젝트의 오디오 목록 불러오기
@@ -63,3 +57,7 @@ class AudioCreateSerializer(serializers.ModelSerializer):
 
         # 오디오 생성
         return Audio.objects.create(**validated_data)
+
+
+class AudioUpdateSerializer(AudioSerializer):
+    audio_id = serializers.IntegerField(read_only=True)
