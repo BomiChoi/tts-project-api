@@ -7,7 +7,7 @@ from apps.project.models import Project
 class Audio(TimeStampedModel):
     audio_id = models.PositiveIntegerField(default=0)
     text = models.TextField()
-    speed = models.DecimalField(max_digits=5, decimal_places=2)
+    speed = models.DecimalField(max_digits=5, decimal_places=2, default=1)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     created_time = None
 
