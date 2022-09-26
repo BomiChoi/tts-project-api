@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 
-from api.v1.utils import preprocess_text
+from api.v1.utils import preprocess_sentence
 from apps.audio.models import Audio
 from apps.project.models import Project
 
@@ -44,7 +44,7 @@ class AudioCreateSerializer(serializers.ModelSerializer):
             attrs['audio_id'] = len(audios) + 1
 
         # 텍스트 전처리
-        attrs['text'] = preprocess_text(attrs['text'])
+        attrs['text'] = preprocess_sentence(attrs['text'])
         if len(attrs['text']) == 0:
             raise ValidationError({'text', '빈 문장입니다.'})
 

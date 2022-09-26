@@ -3,13 +3,13 @@ import re
 from apps.audio.models import Audio
 
 
-def preprocess_text(s):
+def preprocess_sentence(s):
     """ 문장 전처리 함수 """
     # 맨 앞, 맨 뒤 공백 제거
     s = s.strip()
 
     # 한글, 영어, 숫자, 물음표, 느낌표, 마침표, 따옴표, 공백를 제외한 나머지 제거
-    s = re.sub('[^(ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|?!.\'\" )]', '', s)
+    s = re.sub('[^ㄱ-ㅎ가-힣a-zA-Z0-9?!.\'\" ]', '', s)
 
     return s
 
@@ -23,7 +23,7 @@ def preprocess(li):
 
     for i in range(len(sp) // 2):
         # 문장 전처리
-        s = preprocess_text(sp[2 * i])
+        s = preprocess_sentence(sp[2 * i])
 
         # 빈 문장이 아닐 경우 문장부호 다시 붙인 후 저장
         if len(s) > 0:
@@ -32,7 +32,7 @@ def preprocess(li):
     # 마지막 문장에 문장부호가 없는 경우 따로 추가
     if len(sp) % 2 == 1:
         # 문장 전처리
-        s = preprocess_text(sp[-1])
+        s = preprocess_sentence(sp[-1])
 
         # 빈 문장이 아닐 경우 저장
         if len(s) > 0:
